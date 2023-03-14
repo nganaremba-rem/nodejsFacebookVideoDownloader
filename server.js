@@ -86,7 +86,7 @@ const fetchLink = async (url) => {
     })
     .then((response) => {
       const html = response.data;
-
+      console.log(html);
       const $ = cheerio.load(html);
       const fullLink = $("a", ".widePic").attr("href");
       console.log("fullLink" + fullLink);
