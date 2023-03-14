@@ -69,17 +69,18 @@ const fetchLink = async (url) => {
     .then((response) => {
       if (response.headers["set-cookie"]) {
         // Extract the authentication cookies from the response headers
-        const cookies = response.headers["set-cookie"]
-          .map((cookie) => cookie.split(";")[0])
-          .join("; ");
+        const cookie = response.headers["set-cookie"][0].split(";")[0] + ";";
+        // const cookies = response.headers["set-cookie"]
+        //   .map((cookie) => cookie.split(";")[0])
+        //   .join("; ");
         // Set the authentication cookies in the Axios instance config
-        console.log("cookies = " + cookies);
-        axios.defaults.headers.common["Cookie"] = cookies;
+        console.log("cookies = " + cookie);
+        axios.defaults.headers.common["Cookie"] = cookie;
         // Make a GET request to the video page URL to retrieve the video data
         return axios.get(url, {
           headers: {
             "Accept-Language": "en",
-            Cookie: cookies,
+            Cookie: cookie,
           },
         });
       } else {
@@ -88,7 +89,7 @@ const fetchLink = async (url) => {
     })
     .then((response) => {
       const html = response.data;
-      console.log(html);
+      // console.log(html);
       const $ = cheerio.load(html);
       const fullLink = $("a", ".widePic").attr("href");
       console.log("fullLink" + fullLink);
