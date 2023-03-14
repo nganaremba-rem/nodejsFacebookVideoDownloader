@@ -36,11 +36,16 @@ app.use(cors());
 // };
 
 const fetchLink = async (url) => {
+  console.log("Func");
   const response = await axios.get(url);
-  const html = response.data;
+  console.log("response");
+  const html = await response.data;
+  console.log("html");
 
   const $ = cheerio.load(html);
+  console.log("loaded");
   const fullLink = $("a", ".widePic").attr("href");
+  console.log("fullLink");
   const link = decodeURIComponent(
     fullLink.replace(new RegExp(".+src=", "gi"), "")
   );
