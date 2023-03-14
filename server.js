@@ -79,6 +79,11 @@ app.get("/*", (req, res) => {
     .status(404)
     .send("Post request to https://tame-tan-macaw.cyclic.app/getFbVideoLink");
 });
+app.post("/*", (req, res) => {
+  res
+    .status(404)
+    .send("Post request to https://tame-tan-macaw.cyclic.app/getFbVideoLink");
+});
 
 app.listen(PORT, () =>
   console.log(`Server started at: http://${hostName}:${PORT}`)
