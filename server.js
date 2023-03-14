@@ -80,4 +80,6 @@ app.get("/*", (req, res) => {
   );
 });
 
-app.listen(PORT, () => console.log(`http://${hostName}:${PORT}`));
+app.listen(PORT, () =>
+  console.log(`Server started at: http://${hostName}:${PORT}`)
+);
