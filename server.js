@@ -76,9 +76,7 @@ app.post("/getFbVideoLink", async (req, res) => {
 
 app.get("/*", (req, res) => {
   res.send(
-    <h1>
-      Make POST Request to https://tame-tan-macaw.cyclic.app/getFbVideoLink/
-    </h1>
+    "<h1>Make POST Request to https://tame-tan-macaw.cyclic.app/getFbVideoLink/</h1>"
   );
 });
 
