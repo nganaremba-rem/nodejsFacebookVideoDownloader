@@ -45,7 +45,6 @@ const fetchLink = async (url) => {
     .get("https://mbasic.facebook.com/")
     .then((response) => {
       const html = response.data;
-      console.log(html);
       // const regex = new RegExp('name="fb_dtsg" value="(.*?)"', "gm");
       // const match = regex.exec(html);
       // console.log(match);
