@@ -36,25 +36,71 @@ app.use(cors());
 // };
 
 const fetchLink = async (url) => {
-  console.log("Func");
-  const response = await axios.get(`${url}`, {
-    headers: {
-      "Accept-Language": "en",
-    },
-  });
-  console.log("response");
-  const html = await response.data;
-  console.log("html" + html);
+  // Set your Facebook email and password
+  const email = process.env.EMAIL;
+  const password = process.env.PASSWORD;
 
-  const $ = cheerio.load(html);
-  console.log("loaded" + $);
-  const fullLink = $("a", ".widePic").attr("href");
-  console.log("fullLink" + fullLink);
-  const link = decodeURIComponent(
-    fullLink.replace(new RegExp(".+src=", "gi"), "")
-  );
+  // Login to Facebook to get authenticated cookies
+  const link = axios
+    .get("https://mbasic.facebook.com/")
+    .then((response) => {
+      const html = response.data;
+      console.log(html);
+      // const regex = new RegExp('name="fb_dtsg" value="(.*?)"', "gm");
+      // const match = regex.exec(html);
+      // console.log(match);
+      // const fb_dtsg = match[1];
+      const data = {
+        email: email,
+        pass: password,
+        // fb_dtsg: fb_dtsg,
+      };
+      return axios.post(
+        "https://mbasic.facebook.com/login/device-based/regular/login/?refsrc=deprecated&lwv=100&refid=8",
+        data,
+        {
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+          },
+          maxRedirects: 0,
+          validateStatus: (status) => status >= 200 && status < 303,
+        }
+      );
+    })
+    .then((response) => {
+      if (response.headers["set-cookie"]) {
+        // Extract the authentication cookies from the response headers
+        const cookies = response.headers["set-cookie"]
+          .map((cookie) => cookie.split(";")[0])
+          .join("; ");
+        // Set the authentication cookies in the Axios instance config
+        axios.defaults.headers.common["Cookie"] = cookies;
+        // Make a GET request to the video page URL to retrieve the video data
+        return axios.get(url, {
+          headers: {
+            "Accept-Language": "en",
+          },
+        });
+      } else {
+        throw new Error("Login failed");
+      }
+    })
+    .then((response) => {
+      const html = response.data;
 
-  console.log(link);
+      const $ = cheerio.load(html);
+      const fullLink = $("a", ".widePic").attr("href");
+      console.log("fullLink" + fullLink);
+      const link = decodeURIComponent(
+        fullLink.replace(new RegExp(".+src=", "gi"), "")
+      );
+
+      console.log(link);
+      return link;
+    })
+    .catch((error) => {
+      console.log(error);
+    });
 
   return link;
 };
