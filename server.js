@@ -77,12 +77,12 @@ app.post("/getFbVideoLink", async (req, res) => {
 app.get("/*", (req, res) => {
   res
     .status(404)
-    .send("Post request to https://tame-tan-macaw.cyclic.app/getFbVideoLink");
+    .send("Post request to https://calm-dirndl-bass.cyclic.app/getFbVideoLink");
 });
 app.post("/*", (req, res) => {
   res
     .status(404)
-    .send("Post request to https://tame-tan-macaw.cyclic.app/getFbVideoLink");
+    .send("Post request to https://calm-dirndl-bass.cyclic.app/getFbVideoLink");
 });
 
 app.listen(PORT, () =>
