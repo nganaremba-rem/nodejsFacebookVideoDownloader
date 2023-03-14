@@ -45,6 +45,8 @@ const fetchLink = async (url) => {
     fullLink.replace(new RegExp(".+src=", "gi"), "")
   );
 
+  console.log(link);
+
   return link;
 };
 
