@@ -40,12 +40,12 @@ const fetchLink = async (url) => {
   const response = await axios.get(url);
   console.log("response");
   const html = await response.data;
-  console.log("html");
+  console.log("html" + html);
 
   const $ = cheerio.load(html);
-  console.log("loaded");
+  console.log("loaded" + $);
   const fullLink = $("a", ".widePic").attr("href");
-  console.log("fullLink");
+  console.log("fullLink" + fullLink);
   const link = decodeURIComponent(
     fullLink.replace(new RegExp(".+src=", "gi"), "")
   );
