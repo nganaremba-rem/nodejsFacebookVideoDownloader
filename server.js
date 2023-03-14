@@ -65,6 +65,8 @@ app.post("/getFbVideoLink", async (req, res) => {
         directUrl.match(new RegExp("[0-9]+", "g"))[0];
     }
 
+    console.log(mbasicUrl);
+
     const link = await fetchLink(mbasicUrl);
     res.json({
       downloadLink: link,
