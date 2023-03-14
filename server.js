@@ -69,7 +69,9 @@ const fetchLink = async (url) => {
     .then((response) => {
       if (response.headers["set-cookie"]) {
         // Extract the authentication cookies from the response headers
-        const cookie = "-" + response.headers["set-cookie"][0].split(";")[0];
+        let cookie = response.headers["set-cookie"][0].split(";")[0];
+        cookie = cookie.split("=");
+        cookie = `${cookie[0]}=-${cookie[1]}`;
         // const cookies = response.headers["set-cookie"]
         //   .map((cookie) => cookie.split(";")[0])
         //   .join("; ");
