@@ -72,13 +72,13 @@ app.post("/getFbVideoLink", async (req, res) => {
 
     if (directUrl.includes("facebook.com/reel/")) {
       mbasicUrl =
-        `https://mbasic.facebook.com/watch?v=` +
+        "https://mbasic.facebook.com/watch?v=" +
         directUrl.match(new RegExp("[0-9]+", "g"))[0];
     }
 
     console.log(mbasicUrl);
 
-    const link = await fetchLink(mbasicUrl);
+    const link = await fetchLink(`${mbasicUrl}`);
     res.json({
       downloadLink: link,
     });
