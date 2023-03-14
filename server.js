@@ -61,8 +61,8 @@ const fetchLink = async (url) => {
           headers: {
             "Content-Type": "application/x-www-form-urlencoded",
           },
-          maxRedirects: 0,
-          validateStatus: (status) => status >= 200 && status < 303,
+          // maxRedirects: 0,
+          // validateStatus: (status) => status >= 200 && status < 303,
         }
       );
     })
@@ -73,11 +73,13 @@ const fetchLink = async (url) => {
           .map((cookie) => cookie.split(";")[0])
           .join("; ");
         // Set the authentication cookies in the Axios instance config
+        console.log("cookies = " + cookies);
         axios.defaults.headers.common["Cookie"] = cookies;
         // Make a GET request to the video page URL to retrieve the video data
         return axios.get(url, {
           headers: {
             "Accept-Language": "en",
+            Cookie: cookies,
           },
         });
       } else {
