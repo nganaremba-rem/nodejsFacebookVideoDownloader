@@ -37,7 +37,7 @@ app.use(cors());
 
 const fetchLink = async (url) => {
   console.log("Func");
-  const response = await axios.get(url);
+  const response = await axios.get(`${url}`);
   console.log("response");
   const html = await response.data;
   console.log("html" + html);
